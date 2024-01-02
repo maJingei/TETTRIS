@@ -254,3 +254,28 @@ void Block::HardLanding()
 		Blockpt[i] = ShadowBlockpt[i];
 	}
 }
+
+void Block::Rotate()
+{
+	int index = 0;
+	int X = Blockpt[0].getX() - 1;
+	int Y = Blockpt[0].getY() + 1;
+	Point TempPt[BLOCKSIZE];
+
+	for (int i = 0; i < BLOCKSIZE - 1; i++)
+	{
+		for (int j = 0; j < BLOCKSIZE - 1; j++)
+		{
+			char temp = _Gmap[Y - j][X + i];
+			if (temp == 2)
+			{
+				TempPt[index++].setPoint(X + j, Y - 2 + i);
+			}
+		}
+	}
+	Move(0, 0);
+	for (int i = 0; i < BLOCKSIZE; i++)
+	{
+		Blockpt[i] = TempPt[i];
+	}
+}

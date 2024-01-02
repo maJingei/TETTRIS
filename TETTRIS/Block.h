@@ -3,6 +3,7 @@
 #define BLOCKSIZE 4
 #define EARX 10
 #define EARY 0
+#define RIDX(i,j,n) i*n+j
 
 class Block
 {
@@ -12,6 +13,7 @@ public:
 	void Move(int px=0,int py=0);
 	bool BlockLandingCheck(Block b, int random);
 	void HardLanding();
+	void Rotate();
 	friend void run();
 protected:
 	Point Blockpt[BLOCKSIZE];

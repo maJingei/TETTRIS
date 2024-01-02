@@ -4,9 +4,6 @@
 #include"map.h"
 #include<conio.h>
 #include<iostream>
-#define LEFT 75
-#define RIGHT 77
-#define FALLSPEED 0.1
 using namespace std;
 
 extern char _Gmap[MAPHEIGHT][MAPWIDTH];
@@ -19,6 +16,7 @@ void run()
 		{
 			break;
 		}
+		FillLineClear();
 		Block b;
 		Mapping();
 		while (true)
@@ -32,29 +30,35 @@ void run()
 			while (true)
 			{
 				clock_t end = clock();
-				int movekey = 0;
+				int key = 0;
 				if (_kbhit())
 				{
-					movekey = _getch();
-					if (movekey == 224)
+					key = _getch();
+					if (key == 224)
 					{
-						movekey = _getch();
+						key = _getch();
 					}
 
-					if (movekey == ' ')
+					if (key == ' ')
 					{
 						b.Move(0, 0);
 						b.HardLanding();
 						break;
 					}
 
-					if (movekey == LEFT)
+					if (key == 'c')
+					{
+						b.Rotate();
+						b.BlockDraw();
+					}
+
+					if (key == LEFT)
 					{
 						b.Move(-1, 0);
 						b.BlockDraw();
 					}
 
-					else if (movekey == RIGHT)
+					else if (key == RIGHT)
 					{
 						b.Move(1, 0);
 						b.BlockDraw();
@@ -127,5 +131,37 @@ void printGameMap()
 		gotoxy(0, 10);
 		cout << "                                           ";
 		run();
+	}
+}
+
+void FillLineClear()
+{
+	int flag = 0;
+	int FillLinePy = 0;
+	for (int i = MAPHEIGHT - 1; i > 1; i--)
+	{
+		int count = 0;
+		for (int j = 1; j < MAPWIDTH - 1; j++)
+		{
+			if (_Gmap[i][j] == 2)
+				count++;
+			else break;
+		}
+		if (count == MAPWIDTH - 2)
+		{
+			flag = 1;
+			FillLinePy = i;
+			break;
+		}
+	}
+	if (flag == 1)
+	{
+		for (int j = FillLinePy - 1; j > 1; j--)
+		{
+			for (int i = 1; i < MAPWIDTH - 1; i++)
+			{
+				_Gmap[j + 1][i] = _Gmap[j][i];
+			}
+		}
 	}
 }

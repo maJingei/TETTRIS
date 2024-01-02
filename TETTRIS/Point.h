@@ -13,6 +13,11 @@ public:
 	{
 
 	}
+	Point(Point& p)
+	{
+		_x = p._x;
+		_y = p._y;
+	}
 	void setPoint(int x, int y) { _x = x; _y = y; }
 	void setX(int x) { _x = x; }
 	void setY(int y) { _y = y; }
