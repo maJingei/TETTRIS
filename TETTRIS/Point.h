@@ -11,7 +11,7 @@ public:
 	Point(int x, int y)
 		:_x(x),_y(y)
 	{
-
+		//empty
 	}
 	Point(Point& p)
 	{

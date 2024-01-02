@@ -22,7 +22,7 @@ void run()
 		while (true)
 		{
 			b.BlockDraw();
-			if (b.BlockLandingCheck(b, b.random))
+			if (b.BlockLandingCheck(b))
 			{
 				break;
 			}
@@ -37,6 +37,23 @@ void run()
 					if (key == 224)
 					{
 						key = _getch();
+  						if (key == LEFT)
+						{
+							b.Move(-1, 0);
+							b.BlockDraw();
+						}
+
+						else if (key == RIGHT)
+						{
+							b.Move(1, 0);
+							b.BlockDraw();
+						}
+					}
+
+					if (key == 'c')
+					{
+						b.Rotate();
+						b.BlockDraw();
 					}
 
 					if (key == ' ')
@@ -46,23 +63,7 @@ void run()
 						break;
 					}
 
-					if (key == 'c')
-					{
-						b.Rotate();
-						b.BlockDraw();
-					}
 
-					if (key == LEFT)
-					{
-						b.Move(-1, 0);
-						b.BlockDraw();
-					}
-
-					else if (key == RIGHT)
-					{
-						b.Move(1, 0);
-						b.BlockDraw();
-					}
 				}
 				if (double(end - start) / CLOCKS_PER_SEC == FALLSPEED)
 				{
@@ -102,22 +103,7 @@ bool EndGame()
 void printGameMap()
 {
 	int key;
-	int tempx = 0;
-	int tempy = 0;
-	for (int tempy = 0; tempy < MAPHEIGHT; tempy++)
-	{
-		gotoxy(tempx, tempy);
-		for (int tempx = 0; tempx < MAPWIDTH; tempx++)
-		{
-			char temp = _Gmap[tempy][tempx];
-			if (temp == 1)
-				cout << "¢Ã";
-			else if (temp == 2)
-				cout << "¡á";
-			else
-				cout << " ";
-		}
-	}
+	Mapping();
 
 	gotoxy(30, 3);
 	cout << "spacebar : ÂøÁö";
