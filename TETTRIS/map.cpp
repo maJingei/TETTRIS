@@ -33,6 +33,20 @@ char _Gmap[MAPHEIGHT][MAPWIDTH] = {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 };
 
+char _GOpeningMenu[OPNEMENUHEIGHT][OPENMENUWIDTH] = {
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1},
+	{1,1,1,1,1,0,0,0,0,1,1,1,1,1,0,1,0,0,0,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0,1,0,0,1,1,1,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,0,1,1,1,1},
+	{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,0},
+	{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,1,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,0,1,1,1,1},
+	{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,1},
+	{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,1,1,0,0,1,0,0,0,0,1,0,0,1,0,0,1,1,1,1,1,0,0,1},
+	{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1},
+	{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1,1,1,1,1,0,0,1},
+	{0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,1},
+	{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+};
+
 void Mapping()
 {
 	int tempx = 0;
@@ -46,7 +60,7 @@ void Mapping()
 			if (temp == 1) // 벽
 				cout << "▣";
 			else if (temp == 2) //사용자의 입력을 떠난 쌓인 블록
-				cout << "■";
+				cout << "▦";
 			else if (temp == 3) //사용자의 조종을 받고있는 블록
 				cout << "■";
 			else if (temp == 4) // 테트리스 그림자
@@ -55,51 +69,55 @@ void Mapping()
 				cout << " ";
 		}
 	}
-	//switch (random)
-	//{
-	//case 1: // 네모 모양
-	//	Blockpt[0].setPoint(EARX, EARY);
-	//	Blockpt[1].setPoint(EARX + 1, EARY);
-	//	Blockpt[2].setPoint(EARX, EARY + 1);
-	//	Blockpt[3].setPoint(EARX + 1, EARY + 1);
-	//	break;
-	//case 2: // 뻐큐모양
-	//	Blockpt[0].setPoint(EARX, EARY);
-	//	Blockpt[1].setPoint(EARX, EARY + 1);
-	//	Blockpt[2].setPoint(EARX - 1, EARY + 1);
-	//	Blockpt[3].setPoint(EARX + 1, EARY + 1);
-	//	break;
-	//case 3: // 1자 모양
-	//	Blockpt[0].setPoint(EARX, EARY);
-	//	Blockpt[1].setPoint(EARX, EARY + 1);
-	//	Blockpt[2].setPoint(EARX, EARY + 2);
-	//	Blockpt[3].setPoint(EARX, EARY + 3);
-	//	break;
-	//case 4: // ㅡ자 모양
-	//	Blockpt[0].setPoint(EARX, EARY);
-	//	Blockpt[1].setPoint(EARX + 1, EARY);
-	//	Blockpt[2].setPoint(EARX + 2, EARY);
-	//	Blockpt[3].setPoint(EARX - 1, EARY);
-	//	break;
-	//case 5: // 꼬불모양
-	//	Blockpt[0].setPoint(EARX, EARY);
-	//	Blockpt[1].setPoint(EARX + 1, EARY);
-	//	Blockpt[2].setPoint(EARX, EARY + 1);
-	//	Blockpt[3].setPoint(EARX - 1, EARY + 1);
-	//	break;
-	//case 6: // L자 모양
-	//	Blockpt[0].setPoint(EARX, EARY);
-	//	Blockpt[1].setPoint(EARX, EARY + 1);
-	//	Blockpt[2].setPoint(EARX, EARY + 2);
-	//	Blockpt[3].setPoint(EARX + 1, EARY + 2);
-	//	break;
-	//case 7:// 반대 L자 모양
-	//	Blockpt[0].setPoint(EARX, EARY);
-	//	Blockpt[1].setPoint(EARX, EARY + 1);
-	//	Blockpt[2].setPoint(EARX, EARY + 2);
-	//	Blockpt[3].setPoint(EARX - 1, EARY + 2);
-	//	break;
-	//default:
-	//	break;
-	//}
+//	case 1: // 네모 모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX + 1, EARY);
+//		Blockpt[2].setPoint(EARX, EARY + 1);
+//		Blockpt[3].setPoint(EARX + 1, EARY + 1);
+//		break;
+//	case 2: // 뻐큐모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX, EARY + 1);
+//		Blockpt[2].setPoint(EARX - 1, EARY + 1);
+//		Blockpt[3].setPoint(EARX + 1, EARY + 1);
+//		break;
+//	case 3: // 1자 모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX, EARY + 1);
+//		Blockpt[2].setPoint(EARX, EARY + 2);
+//		Blockpt[3].setPoint(EARX, EARY + 3);
+//		break;
+//	case 4: // ㅡ자 모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX + 1, EARY);
+//		Blockpt[2].setPoint(EARX + 2, EARY);
+//		Blockpt[3].setPoint(EARX - 1, EARY);
+//		break;
+//	case 5: // 꼬불모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX + 1, EARY);
+//		Blockpt[2].setPoint(EARX, EARY + 1);
+//		Blockpt[3].setPoint(EARX - 1, EARY + 1);
+//		break;
+//	case 6: // 반대 꼬불모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX - 1, EARY);
+//		Blockpt[2].setPoint(EARX, EARY + 1);
+//		Blockpt[3].setPoint(EARX + 1, EARY + 1);
+//		break;
+//	case 7: // L자 모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX, EARY + 1);
+//		Blockpt[2].setPoint(EARX, EARY + 2);
+//		Blockpt[3].setPoint(EARX + 1, EARY + 2);
+//		break;
+//	case 8:// 반대 L자 모양
+//		Blockpt[0].setPoint(EARX, EARY);
+//		Blockpt[1].setPoint(EARX, EARY + 1);
+//		Blockpt[2].setPoint(EARX, EARY + 2);
+//		Blockpt[3].setPoint(EARX - 1, EARY + 2);
+//		break;
+//	default:
+//		break;
+//}
 }
