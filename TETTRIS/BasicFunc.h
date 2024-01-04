@@ -4,9 +4,7 @@
 #define UP 72
 #define DOWN 80
 #define ENTER 13
+#include"map.h"
 
-void printMenu();
-void FillLineClear();
-bool EndGame();
-void printGameMap();
-void GameOption();
+void FillLineClear(Map& m);
+bool EndGame(Map &m);

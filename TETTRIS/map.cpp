@@ -1,37 +1,10 @@
-#include"map.h"
 #include"goto.h"
+#include"Block.h"
+#include"BasicFunc.h"
 #include<iostream>
+#include<conio.h>
 using namespace std;
-
-char _Gmap[MAPHEIGHT][MAPWIDTH] = {
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-};
+extern double GFALLSPEED;
 
 char _GOpeningMenu[OPNEMENUHEIGHT][OPENMENUWIDTH] = {
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
@@ -47,16 +20,17 @@ char _GOpeningMenu[OPNEMENUHEIGHT][OPENMENUWIDTH] = {
 	{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
 };
 
-void Mapping()
+void Mapping(Map& m)
 {
-	int tempx = 0;
-	int tempy = 0;
-	for (int tempy = 0; tempy < MAPHEIGHT; tempy++)
+	int tempx = 0, tempy = 0;
+	int CursortempX = MAPINITX;
+	int CursortempY = MAPINITY;
+	for (tempy = 0; tempy < MAPHEIGHT; tempy++)
 	{
-		gotoxy(tempx, tempy);
-		for (int tempx = 0; tempx < MAPWIDTH; tempx++)
+		gotoxy(CursortempX, CursortempY);
+		for (tempx = 0; tempx < MAPWIDTH; tempx++)
 		{
-			char temp = _Gmap[tempy][tempx];
+			char temp = m._map[tempy][tempx];
 			if (temp == 1) // 벽
 				cout << "▣";
 			else if (temp == 2) //사용자의 입력을 떠난 쌓인 블록
@@ -68,56 +42,123 @@ void Mapping()
 			else
 				cout << " ";
 		}
+		CursortempY++;
 	}
-//	case 1: // 네모 모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX + 1, EARY);
-//		Blockpt[2].setPoint(EARX, EARY + 1);
-//		Blockpt[3].setPoint(EARX + 1, EARY + 1);
-//		break;
-//	case 2: // 뻐큐모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX, EARY + 1);
-//		Blockpt[2].setPoint(EARX - 1, EARY + 1);
-//		Blockpt[3].setPoint(EARX + 1, EARY + 1);
-//		break;
-//	case 3: // 1자 모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX, EARY + 1);
-//		Blockpt[2].setPoint(EARX, EARY + 2);
-//		Blockpt[3].setPoint(EARX, EARY + 3);
-//		break;
-//	case 4: // ㅡ자 모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX + 1, EARY);
-//		Blockpt[2].setPoint(EARX + 2, EARY);
-//		Blockpt[3].setPoint(EARX - 1, EARY);
-//		break;
-//	case 5: // 꼬불모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX + 1, EARY);
-//		Blockpt[2].setPoint(EARX, EARY + 1);
-//		Blockpt[3].setPoint(EARX - 1, EARY + 1);
-//		break;
-//	case 6: // 반대 꼬불모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX - 1, EARY);
-//		Blockpt[2].setPoint(EARX, EARY + 1);
-//		Blockpt[3].setPoint(EARX + 1, EARY + 1);
-//		break;
-//	case 7: // L자 모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX, EARY + 1);
-//		Blockpt[2].setPoint(EARX, EARY + 2);
-//		Blockpt[3].setPoint(EARX + 1, EARY + 2);
-//		break;
-//	case 8:// 반대 L자 모양
-//		Blockpt[0].setPoint(EARX, EARY);
-//		Blockpt[1].setPoint(EARX, EARY + 1);
-//		Blockpt[2].setPoint(EARX, EARY + 2);
-//		Blockpt[3].setPoint(EARX - 1, EARY + 2);
-//		break;
-//	default:
-//		break;
-//}
+}
+
+void printMenu(Map& m)
+{
+	int key;
+	int MenuSelect = 0;
+	int MenuPointY = 20;
+	for (int i = 0; i < OPNEMENUHEIGHT; i++)
+	{
+		gotoxy(15, 5 + i);
+		for (int j = 0; j < OPENMENUWIDTH; j++)
+		{
+			char temp = _GOpeningMenu[i][j];
+			if (temp == 1)
+			{
+				cout << "■";
+			}
+			else
+				cout << " ";
+		}
+	}
+	gotoxy(40, 18);
+	cout << "위 아래 방향키와 Enter키로 선택하세요 !";
+	gotoxy(50, 20);
+	cout << "게임 플레이";
+	gotoxy(50, 21);
+	cout << "게임 설정";
+	gotoxy(50, 22);
+	cout << "게임 종료";
+	gotoxy(48, MenuPointY);
+	cout << "▶";
+	while (true)
+	{
+		key = _getch();
+		if (key)
+		{
+			if (key == 224)
+			{
+				key = _getch();
+				if (key == DOWN)
+				{
+					if (MenuSelect < 2)
+					{
+						MenuSelect++;
+						gotoxy(48, MenuPointY);
+						cout << " ";
+						gotoxy(48, ++MenuPointY);
+						cout << "▶";
+					}
+				}
+				else if (key == UP)
+				{
+					if (MenuSelect > 0)
+					{
+						MenuSelect--;
+						gotoxy(48, MenuPointY);
+						cout << " ";
+						gotoxy(48, --MenuPointY);
+						cout << "▶";
+					}
+				}
+			}
+			else if (key == ENTER)
+			{
+				break;
+			}
+		}
+	}
+	switch (MenuSelect)
+	{
+	case 0:
+		system("cls");
+		printGameMap(m);
+		break;
+	case 1:
+		system("cls");
+		printGameOption();
+		printMenu(m);
+		break;
+	case 2:
+		abort();
+		break;
+	default:
+		break;
+	}
+}
+
+void printGameOption()
+{
+	while (true)
+	{
+		int key;
+		gotoxy(50, 10);
+		cout << " 블록 낙하 스피드 ◀ " << (GFALLSPEED * 10.0) << " ▶";
+		key = _getch();
+		if (key == 224)
+		{
+			key = _getch();
+			if (key == LEFT)
+			{
+				if (GFALLSPEED > 0.2)
+					GFALLSPEED -= 0.1;
+				gotoxy(50, 10);
+				cout << "                                             ";
+			}
+			else if (key == RIGHT)
+			{
+				if (GFALLSPEED < 1.0)
+					GFALLSPEED += 0.1;
+				gotoxy(50, 10);
+				cout << "                                             ";
+			}
+		}
+		else if (key == ENTER)
+			break;
+	}
+
 }

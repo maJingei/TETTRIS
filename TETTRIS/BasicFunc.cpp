@@ -1,30 +1,37 @@
 #include"BasicFunc.h"
 #include"goto.h"
 #include"Block.h"
-#include"map.h"
 #include<conio.h>
 #include<iostream>
 using namespace std;
 
-extern char _Gmap[MAPHEIGHT][MAPWIDTH];
 extern char _GOpeningMenu[OPNEMENUHEIGHT][OPENMENUWIDTH];
 double GFALLSPEED = 0.5;
 
-void run()
+void run(Map& m)
 {
 	while (true)
 	{
-		if (EndGame())
+		if (EndGame(m))
 		{
+			gotoxy(MAPINITX+ 8, MAPINITY + 10);
+			cout << "GAME OVER";
+			while (true)
+			{
+				int endkey;
+				endkey = _getch();
+				if (endkey)
+					break;
+			}
 			break;
 		}
-		FillLineClear();
+		FillLineClear(m);
 		Block b;
-		Mapping();
+		Mapping(m);
 		while (true)
 		{
-			b.BlockDraw();
-			if (b.BlockLandingCheck(b))
+			b.BlockDraw(m);
+			if (b.BlockLandingCheck(m,b))
 			{
 				break;
 			}
@@ -39,37 +46,52 @@ void run()
 					if (key == 224)
 					{
 						key = _getch();
-  						if (key == LEFT)
+  						if (key == LEFT) // 왼쪽 방향키 입력시 왼쪽으로 이동
 						{
-							b.Move(-1, 0);
-							b.BlockDraw();
+							b.Move(m,-1, 0);
+							b.BlockDraw(m);
 						}
 
-						else if (key == RIGHT)
+						else if (key == RIGHT) // 오른쪽 방향키 입력시 오른쪽으로 이동
 						{
-							b.Move(1, 0);
-							b.BlockDraw();
+							b.Move(m,1, 0);
+							b.BlockDraw(m);
 						}
 					}
 
-					if (key == 'c')
+					if (key == 'c' || key == 'C') // c입력시 블록 회전
 					{
-						b.Rotate();
-						b.BlockDraw();
+						b.Rotate(m);
+						b.BlockDraw(m);
 					}
 
-					if (key == ' ')
+					if (key == ' ') // 스페이스바 입력시 착지
 					{
-						b.Move(0, 0);
+						b.Move(m,0, 0);
 						b.HardLanding();
 						break;
+					}
+					
+					if (key == 'p' || key == 'P') // p 입력시 일시정지
+					{
+						gotoxy(MAPINITX + 8, MAPINITY + 10);
+						cout << "pause";
+						while (true)
+						{
+							int pausekey;
+							pausekey = _getch();
+							if (pausekey == 'p' || key == 'P')
+								break;
+						}
+						gotoxy(MAPINITX + 8, MAPINITY + 10);
+						cout << "     ";
 					}
 
 
 				}
-				if (double(end - start) / CLOCKS_PER_SEC == GFALLSPEED)
+				if (double(end - start) / CLOCKS_PER_SEC > GFALLSPEED) // Clock시간의 차가 낙하 속도 값보다 커지면 바로 한칸 아래로 이동 
 				{
-					b.Move(0, 1);
+					b.Move(m,0, 1);
 					break;
 				}
 			}
@@ -77,94 +99,11 @@ void run()
 	}
 }
 
-void printMenu()
-{
-	int key;
-	int MenuSelect = 0;
-	int MenuPointY = 20;
-	for (int i = 0; i < OPNEMENUHEIGHT; i++)
-	{
-		gotoxy(15, 5 + i);
-		for (int j = 0; j < OPENMENUWIDTH; j++)
-		{
-			char temp = _GOpeningMenu[i][j];
-			if (temp == 1)
-			{
-				cout << "■";
-			}
-			else
-				cout << " ";
-		}
-	}
-	gotoxy(50, 20);
-	cout << "게임 플레이";
-	gotoxy(50, 21);
-	cout << "게임 설정";
-	gotoxy(50, 22);
-	cout << "게임 종료";
-	gotoxy(48, MenuPointY);
-	cout << "▶";
-	while (true)
-	{
-		key = _getch();
-		if (key)
-		{
-			if (key == 224)
-			{
-				key = _getch();
-				if (key == DOWN)
-				{
-					if (MenuSelect < 2)
-					{
-						MenuSelect++;
-						gotoxy(48, MenuPointY);
-						cout << " ";
-						gotoxy(48, ++MenuPointY);
-						cout << "▶";
-					}
-				}
-				else if (key == UP)
-				{
-					if (MenuSelect > 0)
-					{
-						MenuSelect--;
-						gotoxy(48, MenuPointY);
-						cout << " ";
-						gotoxy(48, --MenuPointY);
-						cout << "▶";
-					}
-				}
-			}
-			else if (key == ENTER)
-			{
-				break;
-			}
-		}
-	}
-	switch (MenuSelect)
-	{
-	case 0:
-		system("cls");
-		printGameMap();
-		break;
-	case 1:
-		system("cls");
-		GameOption();
-		printMenu();
-		break;
-	case 2:
-		exit(1);
-		break;
-	default:
-		break;
-	}
-}
-
-bool EndGame()
+bool EndGame(Map& m)
 {
 	for (int i = 1; i < MAPWIDTH; i++)
 	{
-		if (_Gmap[EARY][i] == 2)
+		if (m._map[EARY][i] == 2)
 		{
 			return true;
 		}
@@ -172,27 +111,31 @@ bool EndGame()
 	return false;
 }
 
-void printGameMap()
+void printGameMap(Map& m)
 {
 	int key;
-	Mapping();
+	Mapping(m);
 
-	gotoxy(30, 3);
+	gotoxy(MAPINITX + 40, MAPINITY + 10);
 	cout << "spacebar : 착지";
-	gotoxy(30, 4);
+	gotoxy(MAPINITX + 40, MAPINITY + 12);
 	cout << "<- -> : 좌우이동";
-	gotoxy(0, 10);
+	gotoxy(MAPINITX + 40, MAPINITY + 14);
+	cout << "c : 블럭 회전";
+	gotoxy(MAPINITX + 40, MAPINITY + 16);
+	cout << "p : 일시정지";
+	gotoxy(MAPINITX, MAPINITY + 10);
 	cout << "any key press, Game Start";
 	key = _getch();
 	if (key)
 	{
-		gotoxy(0, 10);
-		cout << "                                           ";
-		run();
+		gotoxy(MAPINITX, MAPINITY + 10);
+		cout << "                                    ";
+		run(m);
 	}
 }
 
-void FillLineClear()
+void FillLineClear(Map& m)
 {
 	int FillLinePy = 0;
 	int FillLineCount = 0;
@@ -201,7 +144,7 @@ void FillLineClear()
 		int count = 0;
 		for (int j = 1; j < MAPWIDTH - 1; j++)
 		{
-			if (_Gmap[i][j] == 2)
+			if (m._map[i][j] == 2)
 				count++;
 			else break;
 		}
@@ -217,40 +160,9 @@ void FillLineClear()
 		{
 			for (int i = 1; i < MAPWIDTH - 1; i++)
 			{
-				_Gmap[j + FillLineCount][i] = _Gmap[j][i];
+				m._map[j + FillLineCount][i] = m._map[j][i];
 			}
 		}
 	}
 }
 
-void GameOption()
-{
-	while (true)
-	{
-		int key;
-		gotoxy(50, 10);
-		cout << " 블록 낙하 스피드 ◀ " << GFALLSPEED << " ▶";
-		key = _getch();
-		if (key == 224)
-		{
-			key = _getch();
-			if (key == LEFT)
-			{
-				if (GFALLSPEED > 0.2)
-					GFALLSPEED -= 0.1;
-				gotoxy(50, 10);
-				cout << "                                             ";
-			}
-			else if (key == RIGHT)
-			{
-				if (GFALLSPEED < 1.0)
-					GFALLSPEED += 0.1;
-				gotoxy(50, 10);
-				cout << "                                             ";
-			}
-		}
-		else if (key == ENTER)
-			break;
-	}
-
-}

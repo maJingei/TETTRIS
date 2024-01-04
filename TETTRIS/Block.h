@@ -1,19 +1,20 @@
 #pragma once
 #include"Point.h"
+#include"map.h"
 #define BLOCKSIZE 4
 #define EARX 10
-#define EARY 0
+#define EARY 3
 
 class Block
 {
 public:
 	Block();
-	void BlockDraw();
-	void Move(int px=0,int py=0);
-	bool BlockLandingCheck(Block b);
+	void BlockDraw(Map& m);
+	void Move(Map& m,int px=0,int py=0);
+	bool BlockLandingCheck(Map& m,Block b);
 	void HardLanding();
-	void Rotate();
-	friend void run();
+	void Rotate(Map& m);
+	friend void run(Map& m);
 protected:
 	Point Blockpt[BLOCKSIZE];
 	Point ShadowBlockpt[BLOCKSIZE];

@@ -1,5 +1,4 @@
 #include "goto.h"
-#include "map.h"
 #include "Block.h"
 #include "BasicFunc.h"
 #include <iostream>
@@ -7,12 +6,15 @@
 #include <Windows.h>
 using namespace std;
 
-extern char _Gmap[MAPHEIGHT][MAPWIDTH];
-
 
 int main()
 {
 	srand((unsigned)time(NULL));
 	HIdeCursor();
-	printMenu();
+	while (true)
+	{
+		Map m; // 게임 오버된 후 다시 시작하면 맵이 초기화 되어야 하므로 클래스로 선언
+		printMenu(m);
+		system("cls");
+	}
 }
