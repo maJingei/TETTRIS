@@ -14,10 +14,9 @@ public:
 	bool BlockLandingCheck(Map& m,Block b);
 	void HardLanding();
 	void Rotate(Map& m);
-	friend void run(Map& m);
 protected:
 	Point Blockpt[BLOCKSIZE];
 	Point ShadowBlockpt[BLOCKSIZE];
-	int random;
-	int RotateCount = 0;
+	int _random;
+	int _RotateCount = 0;
 };

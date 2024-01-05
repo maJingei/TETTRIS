@@ -21,16 +21,13 @@
     <ClCompile Include="map.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="run.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Block.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="gotoxy.cpp">
+    <ClCompile Include="GameRun.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="BasicFunc.cpp">
+    <ClCompile Include="GameUtillFunc.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,16 +35,10 @@
     <ClInclude Include="map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="run.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="goto.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicFunc.h">
+    <ClInclude Include="GameUtillFunc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">

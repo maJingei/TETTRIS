@@ -1,5 +1,4 @@
-#include"BasicFunc.h"
-#include"goto.h"
+#include"GameUtillFunc.h"
 #include"Block.h"
 #include<conio.h>
 #include<iostream>
@@ -8,13 +7,13 @@ using namespace std;
 extern char _GOpeningMenu[OPNEMENUHEIGHT][OPENMENUWIDTH];
 double GFALLSPEED = 0.5;
 
-void run(Map& m)
+void GameUtillFunc::run(Map& m)
 {
 	while (true)
 	{
-		if (EndGame(m))
+		if (GameUtillFunc::EndGame(m))
 		{
-			gotoxy(MAPINITX+ 8, MAPINITY + 10);
+			GameUtillFunc::gotoxy(MAPINITX+ 8, MAPINITY + 10);
 			cout << "GAME OVER";
 			while (true)
 			{
@@ -25,7 +24,7 @@ void run(Map& m)
 			}
 			break;
 		}
-		FillLineClear(m);
+		GameUtillFunc::FillLineClear(m);
 		Block b;
 		Mapping(m);
 		while (true)
@@ -74,7 +73,7 @@ void run(Map& m)
 					
 					if (key == 'p' || key == 'P') // p 입력시 일시정지
 					{
-						gotoxy(MAPINITX + 8, MAPINITY + 10);
+						GameUtillFunc::gotoxy(MAPINITX + 8, MAPINITY + 10);
 						cout << "pause";
 						while (true)
 						{
@@ -83,7 +82,7 @@ void run(Map& m)
 							if (pausekey == 'p' || key == 'P')
 								break;
 						}
-						gotoxy(MAPINITX + 8, MAPINITY + 10);
+						GameUtillFunc::gotoxy(MAPINITX + 8, MAPINITY + 10);
 						cout << "     ";
 					}
 
@@ -99,70 +98,26 @@ void run(Map& m)
 	}
 }
 
-bool EndGame(Map& m)
-{
-	for (int i = 1; i < MAPWIDTH; i++)
-	{
-		if (m._map[EARY][i] == 2)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
 void printGameMap(Map& m)
 {
 	int key;
 	Mapping(m);
 
-	gotoxy(MAPINITX + 40, MAPINITY + 10);
+	GameUtillFunc::gotoxy(MAPINITX + 40, MAPINITY + 10);
 	cout << "spacebar : 착지";
-	gotoxy(MAPINITX + 40, MAPINITY + 12);
+	GameUtillFunc::gotoxy(MAPINITX + 40, MAPINITY + 12);
 	cout << "<- -> : 좌우이동";
-	gotoxy(MAPINITX + 40, MAPINITY + 14);
+	GameUtillFunc::gotoxy(MAPINITX + 40, MAPINITY + 14);
 	cout << "c : 블럭 회전";
-	gotoxy(MAPINITX + 40, MAPINITY + 16);
+	GameUtillFunc::gotoxy(MAPINITX + 40, MAPINITY + 16);
 	cout << "p : 일시정지";
-	gotoxy(MAPINITX, MAPINITY + 10);
+	GameUtillFunc::gotoxy(MAPINITX, MAPINITY + 10);
 	cout << "any key press, Game Start";
 	key = _getch();
 	if (key)
 	{
-		gotoxy(MAPINITX, MAPINITY + 10);
+		GameUtillFunc::gotoxy(MAPINITX, MAPINITY + 10);
 		cout << "                                    ";
-		run(m);
+		GameUtillFunc::run(m);
 	}
 }
-
-void FillLineClear(Map& m)
-{
-	int FillLinePy = 0;
-	int FillLineCount = 0;
-	for (int i = MAPHEIGHT - 1; i > 1; i--)
-	{
-		int count = 0;
-		for (int j = 1; j < MAPWIDTH - 1; j++)
-		{
-			if (m._map[i][j] == 2)
-				count++;
-			else break;
-		}
-		if (count == MAPWIDTH - 2)
-		{
-			FillLinePy = i;
-			FillLineCount++;
-		}
-	}
-	if (FillLineCount > 0)
-	{
-		for (int j = FillLinePy - 1; j > 1; j--)
-		{
-			for (int i = 1; i < MAPWIDTH - 1; i++)
-			{
-				m._map[j + FillLineCount][i] = m._map[j][i];
-			}
-		}
-	}
-}
-

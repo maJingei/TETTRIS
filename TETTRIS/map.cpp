@@ -1,6 +1,5 @@
-#include"goto.h"
+#include"GameUtillFunc.h"
 #include"Block.h"
-#include"BasicFunc.h"
 #include<iostream>
 #include<conio.h>
 using namespace std;
@@ -27,7 +26,7 @@ void Mapping(Map& m)
 	int CursortempY = MAPINITY;
 	for (tempy = 0; tempy < MAPHEIGHT; tempy++)
 	{
-		gotoxy(CursortempX, CursortempY);
+		GameUtillFunc::GameUtillFunc::gotoxy(CursortempX, CursortempY);
 		for (tempx = 0; tempx < MAPWIDTH; tempx++)
 		{
 			char temp = m._map[tempy][tempx];
@@ -53,7 +52,7 @@ void printMenu(Map& m)
 	int MenuPointY = 20;
 	for (int i = 0; i < OPNEMENUHEIGHT; i++)
 	{
-		gotoxy(15, 5 + i);
+		GameUtillFunc::gotoxy(15, 5 + i);
 		for (int j = 0; j < OPENMENUWIDTH; j++)
 		{
 			char temp = _GOpeningMenu[i][j];
@@ -65,15 +64,15 @@ void printMenu(Map& m)
 				cout << " ";
 		}
 	}
-	gotoxy(40, 18);
+	GameUtillFunc::gotoxy(40, 18);
 	cout << "위 아래 방향키와 Enter키로 선택하세요 !";
-	gotoxy(50, 20);
+	GameUtillFunc::gotoxy(50, 20);
 	cout << "게임 플레이";
-	gotoxy(50, 21);
+	GameUtillFunc::gotoxy(50, 21);
 	cout << "게임 설정";
-	gotoxy(50, 22);
+	GameUtillFunc::gotoxy(50, 22);
 	cout << "게임 종료";
-	gotoxy(48, MenuPointY);
+	GameUtillFunc::gotoxy(48, MenuPointY);
 	cout << "▶";
 	while (true)
 	{
@@ -88,9 +87,9 @@ void printMenu(Map& m)
 					if (MenuSelect < 2)
 					{
 						MenuSelect++;
-						gotoxy(48, MenuPointY);
+						GameUtillFunc::gotoxy(48, MenuPointY);
 						cout << " ";
-						gotoxy(48, ++MenuPointY);
+						GameUtillFunc::gotoxy(48, ++MenuPointY);
 						cout << "▶";
 					}
 				}
@@ -99,9 +98,9 @@ void printMenu(Map& m)
 					if (MenuSelect > 0)
 					{
 						MenuSelect--;
-						gotoxy(48, MenuPointY);
+						GameUtillFunc::gotoxy(48, MenuPointY);
 						cout << " ";
-						gotoxy(48, --MenuPointY);
+						GameUtillFunc::gotoxy(48, --MenuPointY);
 						cout << "▶";
 					}
 				}
@@ -124,7 +123,7 @@ void printMenu(Map& m)
 		printMenu(m);
 		break;
 	case 2:
-		abort();
+		exit(0);
 		break;
 	default:
 		break;
@@ -136,7 +135,7 @@ void printGameOption()
 	while (true)
 	{
 		int key;
-		gotoxy(50, 10);
+		GameUtillFunc::gotoxy(50, 10);
 		cout << " 블록 낙하 스피드 ◀ " << (GFALLSPEED * 10.0) << " ▶";
 		key = _getch();
 		if (key == 224)
@@ -146,14 +145,14 @@ void printGameOption()
 			{
 				if (GFALLSPEED > 0.2)
 					GFALLSPEED -= 0.1;
-				gotoxy(50, 10);
+				GameUtillFunc::gotoxy(50, 10);
 				cout << "                                             ";
 			}
 			else if (key == RIGHT)
 			{
 				if (GFALLSPEED < 1.0)
 					GFALLSPEED += 0.1;
-				gotoxy(50, 10);
+				GameUtillFunc::gotoxy(50, 10);
 				cout << "                                             ";
 			}
 		}
@@ -162,3 +161,5 @@ void printGameOption()
 	}
 
 }
+
+

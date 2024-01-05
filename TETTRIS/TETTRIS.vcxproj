@@ -127,19 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="gotoxy.cpp" />
+    <ClCompile Include="GameUtillFunc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
-    <ClCompile Include="run.cpp" />
     <ClCompile Include="Block.cpp" />
-    <ClCompile Include="BasicFunc.cpp" />
+    <ClCompile Include="GameRun.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BasicFunc.h" />
-    <ClInclude Include="goto.h" />
+    <ClInclude Include="GameUtillFunc.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="run.h" />
     <ClInclude Include="Block.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

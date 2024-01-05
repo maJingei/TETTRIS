@@ -1,12 +1,12 @@
 #include"Block.h"
-#include"goto.h"
+#include"GameUtillFunc.h"
 #include<iostream>
 using namespace std;
 
 Block::Block()
 {
-	random = rand() % 8 + 1;
-	switch (random)
+	_random = rand() % 8 + 1;
+	switch (_random)
 	{
 	case 1: // 네모 모양
 		Blockpt[0].setPoint(EARX, EARY);
@@ -87,7 +87,7 @@ void Block::BlockDraw(Map& m)
 	for (int i = 0; i < BLOCKSIZE; i++)
 	{
 		char temp = m._map[ShadowBlockpt[i].getY()][ShadowBlockpt[i].getX()];
-		gotoxy(MAPINITX+ShadowBlockpt[i].getX(), MAPINITY+ShadowBlockpt[i].getY());
+		GameUtillFunc::gotoxy(MAPINITX+ShadowBlockpt[i].getX(), MAPINITY+ShadowBlockpt[i].getY());
 		if (temp == 4)
 		{
 			cout << "□";
@@ -102,7 +102,7 @@ void Block::BlockDraw(Map& m)
 	for (int i = 0; i < BLOCKSIZE; i++) 
 	{
 		char temp = m._map[Blockpt[i].getY()][Blockpt[i].getX()];
-		gotoxy(MAPINITX+Blockpt[i].getX(), MAPINITY+Blockpt[i].getY());
+		GameUtillFunc::gotoxy(MAPINITX+Blockpt[i].getX(), MAPINITY+Blockpt[i].getY());
 		if (temp == 3)
 		{
 			cout << "■";
@@ -115,7 +115,7 @@ void Block::Move(Map& m,int px, int py)
 	// 기존의 블럭 삭제
 	for (int i = 0; i < BLOCKSIZE; i++)
 	{
-		gotoxy(MAPINITX+Blockpt[i].getX(), MAPINITY+Blockpt[i].getY());
+		GameUtillFunc::gotoxy(MAPINITX+Blockpt[i].getX(), MAPINITY+Blockpt[i].getY());
 		char temp = m._map[Blockpt[i].getY()][Blockpt[i].getX()];
 		if (temp == 3)
 		{
@@ -126,7 +126,7 @@ void Block::Move(Map& m,int px, int py)
 	// 그림자 블럭 삭제
 	for (int i = 0; i < BLOCKSIZE; i++)
 	{
-		gotoxy(MAPINITX+ShadowBlockpt[i].getX(),MAPINITY+ShadowBlockpt[i].getY());
+		GameUtillFunc::gotoxy(MAPINITX+ShadowBlockpt[i].getX(),MAPINITY+ShadowBlockpt[i].getY());
 		char shadowTemp = m._map[ShadowBlockpt[i].getY()][ShadowBlockpt[i].getX()];
 		if (shadowTemp == 4)
 		{
@@ -185,13 +185,13 @@ void Block::HardLanding()
 
 void Block::Rotate(Map&m)
 {
-	switch (random)
+	switch (_random)
 	{
 	case 1: // 네모 블럭
 		Move(m);
 		break;
 	case 2: // 음수 처리까지
-		if (RotateCount % 4 == 0)
+		if (_RotateCount % 4 == 0)
 		{
 			if ((m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() - 1] == 1 || m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY() - 2][Blockpt[1].getX()] == 1 || m._map[Blockpt[2].getY() - 2][Blockpt[2].getX()] == 2) ||
@@ -206,10 +206,10 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 2);
 				Blockpt[3].setX(Blockpt[3].getX() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 1)
+		else if (_RotateCount % 4 == 1)
 		{
 			if ((m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() + 1] == 1 || m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY()][Blockpt[2].getX() + 2] == 1 || m._map[Blockpt[2].getY()][Blockpt[2].getX() + 2] == 2) ||
@@ -224,10 +224,10 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() - 1);
 				Blockpt[2].setX(Blockpt[2].getX() + 2);
 				Blockpt[3].setY(Blockpt[3].getY() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 2)
+		else if (_RotateCount % 4 == 2)
 		{
 			if ((m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() + 1] == 1 || m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY() + 2][Blockpt[2].getX()] == 1 || m._map[Blockpt[2].getY() + 2][Blockpt[2].getX()] == 2) ||
@@ -242,10 +242,10 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 2);
 				Blockpt[3].setX(Blockpt[3].getX() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 3)
+		else if (_RotateCount % 4 == 3)
 		{
 			if ((m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() - 1] == 1 || m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY()][Blockpt[2].getX() - 2] == 1 || m._map[Blockpt[2].getY()][Blockpt[2].getX() - 2] == 2) ||
@@ -260,12 +260,12 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() + 1);
 				Blockpt[2].setX(Blockpt[2].getX() - 2);
 				Blockpt[3].setY(Blockpt[3].getY() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
 		break;
 	case 3:
-		if (RotateCount % 2 == 0)
+		if (_RotateCount % 2 == 0)
 		{
 			if ((m._map[Blockpt[0].getY() + 3][Blockpt[0].getX() + 3] == 1 || m._map[Blockpt[0].getY() + 3][Blockpt[0].getX() + 3] == 2) ||
 				(m._map[Blockpt[1].getY() + 2][Blockpt[1].getX() + 2] == 1 || m._map[Blockpt[1].getY() + 2][Blockpt[1].getX() + 2] == 2) ||
@@ -283,10 +283,10 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() + 2);
 				Blockpt[2].setX(Blockpt[2].getX() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 1);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 2 == 1)
+		else if (_RotateCount % 2 == 1)
 		{
 			if ((m._map[Blockpt[0].getY() - 3][Blockpt[0].getX() - 3] == 1 || m._map[Blockpt[0].getY() - 3][Blockpt[0].getX() - 3] == 2) ||
 				(m._map[Blockpt[1].getY() - 2][Blockpt[1].getX() - 2] == 1 || m._map[Blockpt[1].getY() - 2][Blockpt[1].getX() - 2] == 2) ||
@@ -304,12 +304,12 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() - 2);
 				Blockpt[2].setX(Blockpt[2].getX() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 1);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
 		break;
 	case 4:
-		if (RotateCount % 2 == 0)
+		if (_RotateCount % 2 == 0)
 		{
 			if ((m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() - 1] == 1 || m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() - 1] == 2) ||
 				(m._map[Blockpt[1].getY() - 2][Blockpt[1].getX() - 2] == 1 || m._map[Blockpt[1].getY() - 2][Blockpt[1].getX() - 2] == 2) ||
@@ -327,10 +327,10 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() - 2);
 				Blockpt[2].setX(Blockpt[2].getX() - 3);
 				Blockpt[2].setY(Blockpt[2].getY() - 3);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 2 == 1)
+		else if (_RotateCount % 2 == 1)
 		{
 			if ((m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() + 1] == 1 || m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() + 1] == 2) ||
 				(m._map[Blockpt[1].getY() + 2][Blockpt[1].getX() + 2] == 1 || m._map[Blockpt[1].getY() + 2][Blockpt[1].getX() + 2] == 2) ||
@@ -348,12 +348,12 @@ void Block::Rotate(Map&m)
 				Blockpt[1].setY(Blockpt[1].getY() + 2);
 				Blockpt[2].setX(Blockpt[2].getX() + 3);
 				Blockpt[2].setY(Blockpt[2].getY() + 3);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
 		break;
 	case 5:
-		if (RotateCount % 2 == 0)
+		if (_RotateCount % 2 == 0)
 		{
 			if ((m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() - 1] == 1 || m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() - 1] == 1 || m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() - 1] == 2) ||
@@ -370,10 +370,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 1);
 				Blockpt[3].setY(Blockpt[3].getY() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 2 == 1)
+		else if (_RotateCount % 2 == 1)
 		{
 			if ((m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() + 1] == 1 || m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() + 1] == 1 || m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() + 1] == 2) ||
@@ -390,12 +390,12 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 1);
 				Blockpt[3].setY(Blockpt[3].getY() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
 		break;
 	case 6:
-		if (RotateCount % 2 == 0)
+		if (_RotateCount % 2 == 0)
 		{
 			if ((m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() + 1] == 1 || m._map[Blockpt[1].getY() + 1][Blockpt[1].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() + 1] == 1 || m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() + 1] == 2) ||
@@ -412,10 +412,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 1);
 				Blockpt[3].setY(Blockpt[3].getY() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 2 == 1)
+		else if (_RotateCount % 2 == 1)
 		{
 			if ((m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() - 1] == 1 || m._map[Blockpt[1].getY() - 1][Blockpt[1].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() - 1] == 1 || m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() - 1] == 2) ||
@@ -432,12 +432,12 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 1);
 				Blockpt[3].setY(Blockpt[3].getY() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
 		break;
 	case 7:
-		if (RotateCount % 4 == 0)
+		if (_RotateCount % 4 == 0)
 		{
 			if ((m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() + 1] == 1 || m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() - 1] == 1 || m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() - 1] == 2) ||
@@ -454,10 +454,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 1);
 				Blockpt[3].setX(Blockpt[3].getX() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 1)
+		else if (_RotateCount % 4 == 1)
 		{
 			if ((m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() - 1] == 1 || m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() + 1] == 1 || m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() + 1] == 2) ||
@@ -474,10 +474,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 1);
 				Blockpt[3].setY(Blockpt[3].getY() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 2)
+		else if (_RotateCount % 4 == 2)
 		{
 			if ((m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() - 1] == 1 || m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() + 1] == 1 || m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() + 1] == 2) ||
@@ -494,10 +494,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 1);
 				Blockpt[3].setX(Blockpt[3].getX() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 3)
+		else if (_RotateCount % 4 == 3)
 		{
 			if ((m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() + 1] == 1 || m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() - 1] == 1 || m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() - 1] == 2) ||
@@ -514,12 +514,12 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 1);
 				Blockpt[3].setY(Blockpt[3].getY() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
 		break;
 	case 8:
-		if (RotateCount % 4 == 0)
+		if (_RotateCount % 4 == 0)
 		{
 			if ((m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() + 1] == 1 || m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() - 1] == 1 || m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() - 1] == 2) ||
@@ -536,10 +536,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 1);
 				Blockpt[3].setY(Blockpt[3].getY() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 1)
+		else if (_RotateCount % 4 == 1)
 		{
 			if ((m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() - 1] == 1 || m._map[Blockpt[0].getY() + 1][Blockpt[0].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() + 1] == 1 || m._map[Blockpt[2].getY() - 1][Blockpt[2].getX() + 1] == 2) ||
@@ -556,10 +556,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() - 1);
 				Blockpt[3].setX(Blockpt[3].getX() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 2)
+		else if (_RotateCount % 4 == 2)
 		{
 			if ((m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() - 1] == 1 || m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() - 1] == 2) ||
 				(m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() + 1] == 1 || m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() + 1] == 2) ||
@@ -576,10 +576,10 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() + 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 1);
 				Blockpt[3].setY(Blockpt[3].getY() + 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
-		else if (RotateCount % 4 == 3)
+		else if (_RotateCount % 4 == 3)
 		{
 			if ((m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() + 1] == 1 || m._map[Blockpt[0].getY() - 1][Blockpt[0].getX() + 1] == 2) ||
 				(m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() - 1] == 1 || m._map[Blockpt[2].getY() + 1][Blockpt[2].getX() - 1] == 2) ||
@@ -596,7 +596,7 @@ void Block::Rotate(Map&m)
 				Blockpt[2].setX(Blockpt[2].getX() - 1);
 				Blockpt[2].setY(Blockpt[2].getY() + 1);
 				Blockpt[3].setX(Blockpt[3].getX() - 2);
-				RotateCount++;
+				_RotateCount++;
 			}
 		}
 		break;
