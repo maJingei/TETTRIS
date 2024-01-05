@@ -88,7 +88,7 @@ void GameUtillFunc::run(Map& m)
 
 
 				}
-				if (double(end - start) / CLOCKS_PER_SEC > GFALLSPEED) // Clock시간의 차가 낙하 속도 값보다 커지면 바로 한칸 아래로 이동 
+				if (static_cast<double>(end - start) / CLOCKS_PER_SEC > GFALLSPEED) // Clock시간의 차가 낙하 속도 값보다 커지면 바로 한칸 아래로 이동 
 				{
 					b.Move(m,0, 1);
 					break;
